@@ -22,17 +22,11 @@ const ImageUpload: FC<ImageUploadProps> = ({}) => {
   const uploadImages = (files: FileList) => {
     const formData = new FormData();
     if (files && files.length) {
-      console.log("Here");
       for (let i = 0; i < files?.length; i++) {
-        console.log("here");
-        console.log(files[i]);
         formData.append("files", files[i] as File);
       }
     }
-    formData.append("name", "roh");
 
-    console.log(files);
-    console.log(formData);
     uploadFiles(formData);
   };
 
