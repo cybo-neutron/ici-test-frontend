@@ -7,6 +7,10 @@ import { ubuntu } from "@/lib/fonts";
 import { uploadFiles } from "@/lib/services/uploadfiles";
 import ImageView from "./ImageView";
 import ImagesContainer from "./ImagesContainer";
+import { supabaseClient } from "@/services/supabase/client";
+import { v4 as uuidv4 } from "uuid";
+import { getFileNameAndExtension } from "@/lib/utils/fileExtension";
+import { uploadFilesToSupaBase } from "../../lib/services/uploadfiles";
 
 interface ImageUploadProps {}
 
@@ -19,15 +23,8 @@ const ImageUpload: FC<ImageUploadProps> = ({}) => {
     else return null;
   };
 
-  const uploadImages = (files: FileList) => {
-    const formData = new FormData();
-    if (files && files.length) {
-      for (let i = 0; i < files?.length; i++) {
-        formData.append("files", files[i] as File);
-      }
-    }
-
-    uploadFiles(formData);
+  const uploadImages = async (files: FileList) => {
+    await uploadFilesToSupaBase(files, "test");
   };
 
   return (
@@ -87,11 +84,14 @@ const ImageUpload: FC<ImageUploadProps> = ({}) => {
       </div>
 
       <Button
-        className={cn(
-          "mt-auto font-semibold uppercase text-xl bg-gradient-to-r from-red-800/70 via-indigo-500/50 to-indigo-600/70 "
-        )}
+        variant="gradient"
+        // className={cn(
+        //   "mt-auto font-semibold uppercase text-xl bg-gradient-to-r from-red-800/70 via-indigo-500/50 to-indigo-600/70 "
+        // )}
         //TODO : disable upload button if no file is selected OR when file is being uploaded
         onClick={() => {
+          console.log("uploading..");
+          console.log(files);
           if (files) uploadImages(files);
         }}
       >

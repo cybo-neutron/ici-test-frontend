@@ -2,13 +2,15 @@ import type { Metadata } from "next";
 import { Inter, Ubuntu } from "next/font/google";
 import "./globals.css";
 import { TooltipProvider } from "@/components/ui/tooltip";
-// import { ubuntu } from '@/lib/fonts'
+import Navbar from "@/components/common/Navbar";
+import { cn } from "@/lib/utils";
+import { ubuntu } from "@/lib/fonts";
 
 const inter = Inter({ subsets: ["latin"] });
-const ubuntu = Ubuntu({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "700"],
-});
+// const ubuntu = Ubuntu({
+//   subsets: ["latin"],
+//   weight: ["300", "400", "500", "700"],
+// });
 
 export const metadata: Metadata = {
   title: "ICI test",
@@ -22,8 +24,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={ubuntu.className}>
-        <TooltipProvider>{children}</TooltipProvider>
+      <body className={cn(ubuntu.className, "flex")}>
+        <TooltipProvider>
+          <Navbar />
+          {children}
+        </TooltipProvider>
       </body>
     </html>
   );
